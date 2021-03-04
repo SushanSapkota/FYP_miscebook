@@ -42,7 +42,7 @@ class SplashActivity : AppCompatActivity() {
                         startActivity(
                             Intent(
                                 this@SplashActivity,
-                                DashboardActivity::class.java
+                                MapActivity::class.java
                             )
                         )
                     } else {

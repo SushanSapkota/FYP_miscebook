@@ -5,23 +5,12 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.fyp_miscebook.AppConstants
 import com.fyp_miscebook.R
-import com.fyp_miscebook.database.userdatabase.UserDataBaseHandler
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import java.io.*
-import java.net.HttpURLConnection
-import java.net.MalformedURLException
-import java.net.URL
-import java.net.URLEncoder
 
 class LoginActivity : AppCompatActivity() {
 
@@ -87,9 +76,11 @@ class LoginActivity : AppCompatActivity() {
                 //startActivity(Intent(this,AdminActivity::java.class))
                 Toast.makeText(this, "Welcome Admin", Toast.LENGTH_SHORT).show()
             } else {
-                val context = this
-                val Userdb = UserDataBaseHandler(context)
-                Userdb.login(username, password, this)
+//                val context = this
+//                val Userdb = UserDataBaseHandler(context)
+//                Userdb.login(username, password, this)
+                startActivity(Intent(this, MapActivity::class.java))
+
             }
 
         } else {
@@ -103,9 +94,7 @@ class LoginActivity : AppCompatActivity() {
                 //startActivity(Intent(this,AdminActivity::java.class))
                 Toast.makeText(this, "Welcome Admin", Toast.LENGTH_SHORT).show()
             } else {
-                val context = this
-                val Userdb = UserDataBaseHandler(context)
-                Userdb.login(username, password, this)
+                startActivity(Intent(this, MapActivity::class.java))
             }
         }
     }

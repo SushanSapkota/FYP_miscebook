@@ -4,15 +4,22 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.fyp_miscebook.AppConstants
+import com.fyp_miscebook.CustomBottomSheetDialogFragment
 import com.fyp_miscebook.R
 import com.fyp_miscebook.database.userdatabase.UserDataBaseHandler
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_dashboard.*
+import kotlinx.android.synthetic.main.persistent_bottomsheet.*
 
 class DashboardActivity : AppCompatActivity() {
 
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
     private var PRIVATE_MODE = 0
     private val PREF_NAME = AppConstants.SharedPreference_login
     val sharedPreferences: SharedPreferences by lazy {
@@ -25,25 +32,60 @@ class DashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
-        val user = sharedPreferences.getString(AppConstants.SharedPreference_username,"")?:""
-        val context = this
-        val Userdb = UserDataBaseHandler(context)
-        val data = Userdb.getall(user)
+//        val user = sharedPreferences.getString(AppConstants.SharedPreference_username,"")?:""
+//        val context = this
+//        val Userdb = UserDataBaseHandler(context)
+//        val data = Userdb.getall(user)
+//
+//        name.text = ""
+//        email.text = ""
+//        username.text = ""
+//        address.text = ""
+//        mobile.text = ""
+//
+//        for (i in 0 until data.size) {
+//            name.append(data[i].firstname + " " + data[i].middlename + data[i].lastname)
+//            email.append(data[i].email)
+//            username.append(data[i].username)
+//            address.append(data[i].address)
+//            mobile.append(data[i].mobile)
+//        }
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
 
-        name.text = ""
-        email.text = ""
-        username.text = ""
-        address.text = ""
-        mobile.text = ""
+        bottomSheetBehavior.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
 
-        for (i in 0 until data.size) {
-            name.append(data[i].firstname + " " + data[i].middlename + data[i].lastname)
-            email.append(data[i].email)
-            username.append(data[i].username)
-            address.append(data[i].address)
-            mobile.append(data[i].mobile)
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                // handle onSlide
+            }
+
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_COLLAPSED -> Toast.makeText(this@DashboardActivity, "STATE_COLLAPSED", Toast.LENGTH_SHORT).show()
+                    BottomSheetBehavior.STATE_EXPANDED -> Toast.makeText(this@DashboardActivity, "STATE_EXPANDED", Toast.LENGTH_SHORT).show()
+                    BottomSheetBehavior.STATE_DRAGGING -> Toast.makeText(this@DashboardActivity, "STATE_DRAGGING", Toast.LENGTH_SHORT).show()
+                    BottomSheetBehavior.STATE_SETTLING -> Toast.makeText(this@DashboardActivity, "STATE_SETTLING", Toast.LENGTH_SHORT).show()
+                    BottomSheetBehavior.STATE_HIDDEN -> Toast.makeText(this@DashboardActivity, "STATE_HIDDEN", Toast.LENGTH_SHORT).show()
+                    else -> Toast.makeText(this@DashboardActivity, "OTHER_STATE", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+
+        btnBottomSheetPersistent.setOnClickListener {
+            if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED)
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            else
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
+
+        btnBottomSheetModal.setOnClickListener {
+            CustomBottomSheetDialogFragment().apply {
+                show(supportFragmentManager, CustomBottomSheetDialogFragment.TAG)
+            }
+        }
+
     }
+
 
     override fun onBackPressed() {
         MaterialAlertDialogBuilder(this)
