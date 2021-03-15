@@ -7,8 +7,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.fyp_miscebook.AppConstants
 import com.fyp_miscebook.R
-import com.fyp_miscebook.database.futsaldatabase.FutsalDataBaseHandler
-import com.fyp_miscebook.database.userdatabase.UserDataBaseHandler
 
 class SplashActivity : AppCompatActivity() {
 
@@ -21,8 +19,6 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         val context = this
-        val Userdb = UserDataBaseHandler(context)
-        val Futsaldb = FutsalDataBaseHandler(context)
         sharedPreferences =
             getSharedPreferences(AppConstants.SharedPreference_login, Context.MODE_PRIVATE)
         val logged = sharedPreferences!!.getBoolean(AppConstants.SharedPreference_logged, false)
@@ -42,7 +38,7 @@ class SplashActivity : AppCompatActivity() {
                         startActivity(
                             Intent(
                                 this@SplashActivity,
-                                MapActivity::class.java
+                                MainActivity::class.java
                             )
                         )
                     } else {

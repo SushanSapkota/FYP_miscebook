@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FYP_Miscebook</string>
+    <string name="app_name">Miscebook</string>
     <string name="welcome_to_miscebook">Welcome To Miscebook</string>
     <string name="user_name">Username</string>
     <string name="remember_me">Remember Me</string>
@@ -34,4 +34,14 @@
     <string name="btn_one">Button 1</string>
     <string name="btn_two">Button 2</string>
     <string name="btn_three">Button 3</string>
+    <string name="book_futsal">Book Futsal</string>
+    <string name="futsal_name">Futsal Name</string>
+    <string name="futsal_address">Futsal Address</string>
+    <string name="futsal_price">Futsal Price</string>
+    <string name="futsal_description">Futsal Description</string>
+    <string name="futsal_phone">Futsal Phone</string>
+    <string name="futsal_pitch_condition">Futsal Pitch Condition</string>
+    <string name="futsal_venue_condition">Futsal Venue Condition</string>
+    <string name="futsal_email">Futsal Email</string>
+    <string name="futsal_booking">Futsal Booking</string>
 </resources>

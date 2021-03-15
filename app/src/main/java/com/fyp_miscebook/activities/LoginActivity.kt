@@ -52,7 +52,9 @@ class LoginActivity : AppCompatActivity() {
                 activity_login_password.error = "Password must have 8 characters"
                 activity_login_password.isFocusable = true
             } else {
-                signIn(username, password)
+//                signIn(username, password)
+                startActivity(Intent(this, MainActivity::class.java))
+
             }
         }
 
@@ -79,7 +81,7 @@ class LoginActivity : AppCompatActivity() {
 //                val context = this
 //                val Userdb = UserDataBaseHandler(context)
 //                Userdb.login(username, password, this)
-                startActivity(Intent(this, MapActivity::class.java))
+                startActivity(Intent(this, MainActivity::class.java))
 
             }
 
@@ -94,7 +96,7 @@ class LoginActivity : AppCompatActivity() {
                 //startActivity(Intent(this,AdminActivity::java.class))
                 Toast.makeText(this, "Welcome Admin", Toast.LENGTH_SHORT).show()
             } else {
-                startActivity(Intent(this, MapActivity::class.java))
+                startActivity(Intent(this, MainActivity::class.java))
             }
         }
     }

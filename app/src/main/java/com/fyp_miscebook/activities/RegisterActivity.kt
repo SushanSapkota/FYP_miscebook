@@ -5,8 +5,6 @@ import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.fyp_miscebook.R
-import com.fyp_miscebook.database.userdatabase.UserDataBaseHandler
-import com.fyp_miscebook.database.userdatabase.UserEntity
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
 
@@ -108,18 +106,7 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
         if (chkBox1.isChecked) {
-            val user = UserEntity()
-            user.firstname = Firstname
-            user.middlename = Middlename
-            user.lastname = Lastname
-            user.email = Email
-            user.username = Username
-            user.password = Password
-            user.address = Address
-            user.mobile = Mobile
-            val context = this
-            val Userdb = UserDataBaseHandler(context)
-            Userdb.insertData(user, this)
+
         } else {
             Toast.makeText(this, "Terms and condition not accepted", Toast.LENGTH_SHORT).show()
         }
