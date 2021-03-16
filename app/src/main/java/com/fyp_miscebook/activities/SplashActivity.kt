@@ -38,7 +38,8 @@ class SplashActivity : AppCompatActivity() {
                         startActivity(
                             Intent(
                                 this@SplashActivity,
-                                MainActivity::class.java
+//                                MainActivity::class.java
+                                DashboardActivity::class.java
                             )
                         )
                     } else {
