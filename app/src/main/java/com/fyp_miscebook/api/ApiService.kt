@@ -18,6 +18,9 @@ interface ApiService {
     @GET("futsal")
     fun getFutsal(): Call<MutableList<FutsalResponse>>
 
+    @GET("cricsal")
+    fun getCricsal(): Call<MutableList<FutsalResponse>>
+
     @GET("topvenue")
     fun getVenue(): Call<MutableList<TopVenueResponse>>
 }

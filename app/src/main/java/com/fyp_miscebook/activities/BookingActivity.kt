@@ -145,6 +145,43 @@ class BookingActivity : AppCompatActivity() {
 
                 })
         }
+        else if (category == "cricsal") {
+            animation_view.isVisible = false
+            ApiClient.apiService.getCricsal()
+                .enqueue(object : Callback<MutableList<FutsalResponse>> {
+                    override fun onFailure(call: Call<MutableList<FutsalResponse>>, t: Throwable) {
+
+                        Log.e("error", t.localizedMessage)
+
+                        animation_view.visibility = View.VISIBLE
+                        Toast.makeText(this@BookingActivity, t.localizedMessage, Toast.LENGTH_SHORT)
+                            .show()
+                        dismissProgressDialog()
+                    }
+
+                    override fun onResponse(
+                        call: Call<MutableList<FutsalResponse>>,
+                        response: Response<MutableList<FutsalResponse>>
+                    ) {
+                        val futsalResponse = response.body()
+                        listFutsal.clear()
+                        futsalResponse?.let { listFutsal.addAll(it) }
+//                val recyclerView: RecyclerView = findViewById(R.id.recycler_main)
+                        futsaladapter = FutsalAdapter(this@BookingActivity, listFutsal)
+
+                        Log.d("API", Gson().toJson(listFutsal))
+                        val layoutManager = LinearLayoutManager(applicationContext)
+                        RecyclerView.layoutManager = layoutManager
+                        RecyclerView.itemAnimator = DefaultItemAnimator()
+                        RecyclerView.adapter = futsaladapter
+
+//                adapter?.notifyDataSetChanged()
+                        Toast.makeText(this@BookingActivity, "SUCCESS", Toast.LENGTH_LONG).show()
+                        dismissProgressDialog()
+                    }
+
+                })
+        }
     }
 
     override fun onStart() {
