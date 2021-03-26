@@ -1,16 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <fragment
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="700dp"
-            tools:context=".activities.MapActivity" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <include layout="@layout/persistent_bottomsheet" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentTop="true"
+            android:background="?attr/colorPrimary"
+            android:fitsSystemWindows="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/ic_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="12sp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginBottom="12sp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/logo" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/ic_logo"
+                    android:text="@string/app_name"
+                    android:textColor="@color/white" />
+
+                <ImageView
+                    android:id="@+id/ic_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/dimen_16"
+                    android:layout_toStartOf="@+id/ic_profile"
+                    android:src="@drawable/ic_search" />
+
+                <ImageView
+                    android:id="@+id/ic_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/dimen_16"
+                    android:src="@drawable/ic_profile"
+                    app:tint="@color/white" />
+
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/my_toolbar"
+            android:orientation="vertical">
+
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="700dp"
+                tools:context=".activities.MapActivity" />
+
+            <include layout="@layout/persistent_bottomsheet" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

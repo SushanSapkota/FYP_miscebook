@@ -1,4 +1,4 @@
-package com.fyp_miscebook
+package com.fyp_miscebook.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.fyp_miscebook.R
+import com.fyp_miscebook.dataModel.ExampleItem
 import kotlinx.android.synthetic.main.futsal_item.view.*
 
 class ExampleAdapter(private val exampleList: List<ExampleItem>) :

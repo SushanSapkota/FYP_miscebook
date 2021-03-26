@@ -34,7 +34,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:navigationIcon="@drawable/ic_menu" />
+                    app:navigationIcon="@drawable/ic_back_home" />
 
                 <TextView
                     android:id="@+id/textView4"
@@ -70,6 +70,15 @@
                     android:textAlignment="center"
                     android:textSize="16sp"
                     android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/futsal_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    tools:srcCompat="@tools:sample/avatars" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_layout_futsal_name"
@@ -112,106 +121,6 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/input_layout_futsal_price"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/activity_futsal_price"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/futsal_price"
-                        android:imeOptions="actionNext"
-                        android:inputType="text"
-                        android:padding="16dp"
-                        android:singleLine="true" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/input_layout_futsal_description"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/activity_futsal_description"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/futsal_description"
-                        android:imeOptions="actionNext"
-                        android:inputType="text"
-                        android:padding="16dp"
-                        android:singleLine="true" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/input_layout_futsal_phone"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/activity_futsal_phone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/futsal_phone"
-                        android:imeOptions="actionNext"
-                        android:inputType="text"
-                        android:padding="16dp"
-                        android:singleLine="true" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/input_layout_futsal_pitch_condition"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/activity_futsal_pitch_condition"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/futsal_pitch_condition"
-                        android:imeOptions="actionNext"
-                        android:inputType="text"
-                        android:padding="16dp"
-                        android:singleLine="true" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/input_layout_futsal_venue_condition"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/activity_futsal_venue_condition"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/futsal_venue_condition"
-                        android:imeOptions="actionNext"
-                        android:inputType="text"
-                        android:padding="16dp"
-                        android:singleLine="true" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_layout_futsal_email"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
@@ -231,6 +140,87 @@
                         android:singleLine="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/input_layout_futsal_price"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/activity_futsal_start"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Start Time"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:padding="16dp"
+                        android:singleLine="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/input_layout_futsal_description"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/activity_futsal_end"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="End Time"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:padding="16dp"
+                        android:singleLine="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/input_layout_futsal_phone"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/activity_futsal_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Date"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:padding="16dp"
+                        android:singleLine="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/input_layout_futsal_pitch_condition"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/activity_futsal_numberofplayer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Number of players"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:padding="16dp"
+                        android:singleLine="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_book_futsal"
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
@@ -238,8 +228,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
                     android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
                     android:backgroundTint="@color/colorPrimary"
                     android:text="@string/book_futsal"
                     android:textColor="@color/white"

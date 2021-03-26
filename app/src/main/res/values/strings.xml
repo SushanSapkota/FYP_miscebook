@@ -44,4 +44,9 @@
     <string name="futsal_venue_condition">Futsal Venue Condition</string>
     <string name="futsal_email">Futsal Email</string>
     <string name="futsal_booking">Futsal Booking</string>
+    <string name="home">Home</string>
+    <string name="booking">Booking</string>
+    <string name="menu">Menu</string>
+    <string name="map">Map</string>
+    <string name="favorite">Favorite</string>
 </resources>

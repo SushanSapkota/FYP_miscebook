@@ -1,12 +1,27 @@
 package com.fyp_miscebook.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.fyp_miscebook.R
+import com.fyp_miscebook.UserEntity
+import com.fyp_miscebook.adapter.UsersAdapter
+import com.fyp_miscebook.api.ApiClient
+import com.fyp_miscebook.model.UserResponse
+import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_booking.*
+import kotlinx.android.synthetic.main.activity_booking.RecyclerView
+import kotlinx.android.synthetic.main.activity_dashboard_.*
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -44,6 +59,7 @@ class RegisterActivity : AppCompatActivity() {
         Address: String,
         Mobile: String
     ) {
+        val userEntity :UserEntity = UserEntity()
 
         if (Firstname.isEmpty()) {
             et_firstname.error = "First name is empty"
@@ -106,7 +122,12 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
         if (chkBox1.isChecked) {
-
+            userEntity.firstname = Firstname
+            userEntity.middlename = Middlename
+            userEntity.lastname = Lastname
+            userEntity.address = Address
+            userEntity.email = Email
+            userEntity.password = Password
         } else {
             Toast.makeText(this, "Terms and condition not accepted", Toast.LENGTH_SHORT).show()
         }

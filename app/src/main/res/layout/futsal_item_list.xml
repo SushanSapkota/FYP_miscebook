@@ -2,7 +2,6 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/Mainbody"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="15dp"
@@ -31,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="@string/user_name"
+            android:text="Name"
             android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/futsalemail_rv"
@@ -39,14 +38,25 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/futsalemail_rv"
+            android:id="@+id/futsaladdress_rv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="@string/email"
+            android:text="@string/address"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/futsalpic"
+            app:layout_constraintTop_toBottomOf="@+id/futsalname_rv" />
+
+        <TextView
+            android:id="@+id/futsalemail_rv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/email"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/futsaladdress_rv"
             app:layout_constraintTop_toBottomOf="@+id/futsalname_rv" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

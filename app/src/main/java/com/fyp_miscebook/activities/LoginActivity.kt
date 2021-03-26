@@ -53,8 +53,6 @@ class LoginActivity : AppCompatActivity() {
                 activity_login_password.isFocusable = true
             } else {
                 signIn(username, password)
-//                startActivity(Intent(this, MainActivity::class.java))
-
             }
         }
 
@@ -66,8 +64,6 @@ class LoginActivity : AppCompatActivity() {
     fun signIn(username: String, password: String) {
         if (checkBox.isChecked) {
             //save username and password when remember me is ticked
-
-            //save username and password when remember me is ticked
             editor!!.clear()
             editor!!.putBoolean(AppConstants.SharedPreference_savelogin, true)
             editor!!.putString(AppConstants.SharedPreference_username, username)
@@ -77,13 +73,10 @@ class LoginActivity : AppCompatActivity() {
             if (username == "Admin" && password == "Admin123") {
                 //startActivity(Intent(this,AdminActivity::java.class))
                 Toast.makeText(this, "Welcome Admin", Toast.LENGTH_SHORT).show()
-            } else {
-//                val context = this
-//                val Userdb = UserDataBaseHandler(context)
-//                Userdb.login(username, password, this)
-//                startActivity(Intent(this, MainActivity::class.java))
+            } else if (username == "Sushan" && password == "Sushan@123") {
                 startActivity(Intent(this, DashboardActivity::class.java))
-
+            } else {
+                Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show()
             }
 
         } else {
@@ -96,10 +89,12 @@ class LoginActivity : AppCompatActivity() {
             if (username == "Admin" && password == "Admin123") {
                 //startActivity(Intent(this,AdminActivity::java.class))
                 Toast.makeText(this, "Welcome Admin", Toast.LENGTH_SHORT).show()
-            } else {
-//                startActivity(Intent(this, MainActivity::class.java))
+            } else if (username == "Sushan" && password == "Sushan@123") {
                 startActivity(Intent(this, DashboardActivity::class.java))
+            } else {
+                Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show()
             }
+
         }
     }
 
@@ -107,9 +102,7 @@ class LoginActivity : AppCompatActivity() {
         MaterialAlertDialogBuilder(this)
             .setTitle(resources.getString(R.string.app_name))
             .setMessage(resources.getString(R.string.exit_text))
-
             .setNegativeButton(resources.getString(R.string.decline)) { dialog, which ->
-
                 dialog.dismiss()
                 // Respond to negative button press
             }
