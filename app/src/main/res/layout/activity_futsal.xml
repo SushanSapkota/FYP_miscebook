@@ -54,13 +54,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/pagetitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -75,9 +74,11 @@
                     android:id="@+id/futsal_image"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/pagetitle"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
+                    android:contentDescription="@string/todo"
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -85,6 +86,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/futsal_image"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp">
@@ -105,6 +107,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/input_layout_futsal_name"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp">
@@ -125,6 +128,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/input_layout_futsal_address"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp">
@@ -140,71 +144,109 @@
                         android:singleLine="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/input_layout_futsal_price"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <LinearLayout
+                    android:id="@+id/start_tab"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/input_layout_futsal_email"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp">
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <TextView
                         android:id="@+id/activity_futsal_start"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint="Start Time"
-                        android:imeOptions="actionNext"
-                        android:inputType="text"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="0.7"
+                        android:background="@drawable/edittext_box"
                         android:padding="16dp"
-                        android:singleLine="true" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:singleLine="true"
+                        android:text="@string/start"
+                        android:textColor="@color/colorPrimary" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/input_layout_futsal_description"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    <Button
+                        android:id="@+id/btn_starttime"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="0.3"
+                        android:text="@string/start" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/end_tab"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/start_tab"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp">
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal"
+                    android:textColor="@color/colorPrimary"
+                    android:weightSum="1">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <TextView
                         android:id="@+id/activity_futsal_end"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint="End Time"
-                        android:imeOptions="actionNext"
-                        android:inputType="text"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="0.7"
+                        android:background="@drawable/edittext_box"
                         android:padding="16dp"
-                        android:singleLine="true" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:singleLine="true"
+                        android:text="@string/finish"
+                        android:textColor="@color/colorPrimary" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/input_layout_futsal_phone"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    <Button
+                        android:id="@+id/btn_endtime"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="0.3"
+                        android:text="@string/finish" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/date_tab"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/end_tab"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp">
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <TextView
                         android:id="@+id/activity_futsal_date"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint="Date"
-                        android:imeOptions="actionNext"
-                        android:inputType="text"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="0.7"
+                        android:background="@drawable/edittext_box"
                         android:padding="16dp"
-                        android:singleLine="true" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:singleLine="true"
+                        android:text="@string/date"
+                        android:textColor="@color/colorPrimary" />
+
+                    <Button
+                        android:id="@+id/btn_date"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="0.3"
+                        android:text="@string/date" />
+                </LinearLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/input_layout_futsal_pitch_condition"
+                    android:id="@+id/input_layout_futsal_player"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/date_tab"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp">
@@ -213,8 +255,8 @@
                         android:id="@+id/activity_futsal_numberofplayer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Number of players"
-                        android:imeOptions="actionNext"
+                        android:hint="@string/number_of_players"
+                        android:imeOptions="actionDone"
                         android:inputType="number"
                         android:maxLength="2"
                         android:padding="16dp"
@@ -226,6 +268,7 @@
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/input_layout_futsal_player"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
@@ -237,7 +280,7 @@
                     app:cornerRadius="8dp"
                     tools:ignore="SmallSp"
                     tools:targetApi="lollipop" />
-            </LinearLayout>
+            </RelativeLayout>
         </ScrollView>
 
     </LinearLayout>

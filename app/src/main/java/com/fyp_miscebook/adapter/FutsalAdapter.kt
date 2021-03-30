@@ -38,15 +38,16 @@ class FutsalAdapter(private val context: Context, private var list: MutableList<
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, FutsalActivity::class.java)
-            intent.putExtra("name",futsal.name)
-            intent.putExtra("address",futsal.address)
-            intent.putExtra("email",futsal.email)
-            intent.putExtra("image",futsal.image)
+            intent.putExtra("id", futsal.futsal_id)
+            intent.putExtra("name", futsal.name)
+            intent.putExtra("address", futsal.address)
+            intent.putExtra("email", futsal.email)
+            intent.putExtra("image", futsal.image)
             context.startActivity(intent)
         }
     }
 
-    class MyViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
+    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         var imagepic: ImageView? = null
         var name: TextView? = null

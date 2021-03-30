@@ -28,6 +28,7 @@
                 android:layout_marginEnd="12dp"
                 android:layout_marginBottom="12sp"
                 android:adjustViewBounds="true"
+                android:contentDescription="@string/todo"
                 android:scaleType="fitCenter"
                 android:src="@drawable/logo" />
 
@@ -37,7 +38,8 @@
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/ic_logo"
                 android:text="@string/app_name"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                tools:ignore="RelativeOverlap" />
 
             <ImageView
                 android:id="@+id/ic_search"
@@ -46,6 +48,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/dimen_16"
                 android:layout_toStartOf="@+id/ic_profile"
+                android:contentDescription="@string/todo"
                 android:src="@drawable/ic_search" />
 
             <ImageView
@@ -55,6 +58,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/dimen_16"
+                android:contentDescription="@string/todo"
                 android:src="@drawable/ic_profile"
                 app:tint="@color/white" />
 
@@ -89,11 +93,12 @@
 
                     <ImageView
                         android:id="@+id/imageView3"
-                        android:layout_width="117dp"
-                        android:layout_height="117dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="16dp"
+                        android:contentDescription="@string/todo"
                         android:src="@drawable/ic_football"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -104,8 +109,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="55dp"
-                        android:text="Hi User"
+                        android:layout_marginTop="40dp"
+                        android:text="@string/hi_user"
                         android:textColor="@color/black"
                         app:layout_constraintBottom_toTopOf="@+id/textView8"
                         app:layout_constraintStart_toStartOf="parent"
@@ -118,7 +123,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
-                        android:text="Find Your Sporting Venue"
+                        android:text="@string/find_your_sporting_venue"
                         android:textColor="@color/black"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/txt_user_name"
@@ -137,53 +142,63 @@
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/rounded_textview"
                 android:padding="16dp"
-                android:text="Your Profile"
+                android:text="@string/your_profile"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
-            <RelativeLayout
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/profiletab"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
+                android:outlineAmbientShadowColor="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView9">
+                app:layout_constraintTop_toBottomOf="@+id/textView9"
+                tools:targetApi="p">
 
-                <ImageView
-                    android:id="@+id/profile_picture"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:contentDescription="@string/todo"
-                    android:src="@drawable/ic_profile" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/Username_TXT"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="32dp"
-                    android:layout_toEndOf="@+id/profile_picture"
-                    android:text="@string/user_name" />
+                    <ImageView
+                        android:id="@+id/profile_picture"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:contentDescription="@string/todo"
+                        android:src="@drawable/ic_profile" />
 
-                <TextView
-                    android:id="@+id/Email_TXT"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/Username_TXT"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_toEndOf="@+id/profile_picture"
-                    android:text="@string/email" />
+                    <TextView
+                        android:id="@+id/Username_TXT"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_toEndOf="@+id/profile_picture"
+                        android:text="@string/user_name" />
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/Email_TXT"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/Username_TXT"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_toEndOf="@+id/profile_picture"
+                        android:text="@string/email" />
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/Supporttab"
@@ -192,9 +207,11 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
+                android:outlineAmbientShadowColor="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profiletab">
+                app:layout_constraintTop_toBottomOf="@+id/profiletab"
+                tools:targetApi="p">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -206,53 +223,66 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
                         android:layout_marginTop="12dp"
-                        android:text="Support"
+                        android:text="@string/support"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <ImageView
-                        android:id="@+id/imageView4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/contactTab"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_below="@+id/textView10"
-                        android:layout_marginStart="12dp"
                         android:layout_marginTop="18dp"
-                        app:srcCompat="@drawable/ic_contact"
-                        tools:ignore="VectorDrawableCompat" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
 
-                    <TextView
-                        android:id="@+id/textView11"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/textView10"
-                        android:layout_marginStart="18dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_toEndOf="@+id/imageView4"
-                        android:text="TextView" />
+                        <ImageView
+                            android:id="@+id/imageView4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:contentDescription="@string/todo"
+                            app:srcCompat="@drawable/ic_contact"
+                            tools:ignore="VectorDrawableCompat" />
 
-                    <ImageView
-                        android:id="@+id/imageView5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/imageView4"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginTop="18dp"
-                        android:layout_marginBottom="18dp"
-                        app:srcCompat="@drawable/ic_info"
-                        tools:ignore="VectorDrawableCompat" />
+                        <TextView
+                            android:id="@+id/textView11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="18dp"
+                            android:text="@string/contact_us" />
+                    </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/textView12"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/imageView4"
-                        android:layout_marginStart="18dp"
+                    <LinearLayout
+                        android:id="@+id/aboutustab"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/contactTab"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="18dp"
-                        android:layout_toEndOf="@+id/imageView5"
-                        android:text="TextView" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:id="@+id/imageView5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="18dp"
+                            android:contentDescription="@string/todo"
+                            app:srcCompat="@drawable/ic_info"
+                            tools:ignore="VectorDrawableCompat" />
+
+                        <TextView
+                            android:id="@+id/textView12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="18dp"
+                            android:text="@string/about_us" />
+                    </LinearLayout>
+
                 </RelativeLayout>
-
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -262,14 +292,17 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:outlineAmbientShadowColor="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Supporttab">
+                app:layout_constraintTop_toBottomOf="@+id/Supporttab"
+                tools:targetApi="p">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
 
                     <TextView
                         android:id="@+id/textView13"
@@ -277,53 +310,67 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
                         android:layout_marginTop="12dp"
-                        android:text="More"
+                        android:text="@string/more"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <ImageView
-                        android:id="@+id/imageView6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/shareTab"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_below="@+id/textView13"
-                        android:layout_marginStart="12dp"
                         android:layout_marginTop="18dp"
-                        app:srcCompat="@drawable/ic_share"
-                        tools:ignore="VectorDrawableCompat" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
 
-                    <TextView
-                        android:id="@+id/share_txt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/textView13"
-                        android:layout_marginStart="18dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_toEndOf="@+id/imageView6"
-                        android:text="TextView" />
+                        <ImageView
+                            android:id="@+id/imageView6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:contentDescription="@string/todo"
+                            app:srcCompat="@drawable/ic_share"
+                            tools:ignore="VectorDrawableCompat" />
 
-                    <ImageView
-                        android:id="@+id/logout_img"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/imageView6"
-                        android:layout_marginStart="12dp"
+                        <TextView
+                            android:id="@+id/share_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="18dp"
+                            android:text="@string/share_our_app" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/logoutTab"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/shareTab"
                         android:layout_marginTop="18dp"
                         android:layout_marginBottom="18dp"
-                        app:srcCompat="@drawable/ic_logout"
-                        tools:ignore="VectorDrawableCompat" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
 
-                    <TextView
-                        android:id="@+id/logout_txt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/imageView6"
-                        android:layout_marginStart="18dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="18dp"
-                        android:layout_toEndOf="@+id/logout_img"
-                        android:text="TextView" />
+                        <ImageView
+                            android:id="@+id/logout_img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:contentDescription="@string/todo"
+                            app:srcCompat="@drawable/ic_logout"
+                            tools:ignore="VectorDrawableCompat" />
+
+                        <TextView
+                            android:id="@+id/logout_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="18dp"
+                            android:text="@string/logout" />
+
+                    </LinearLayout>
                 </RelativeLayout>
-
 
             </com.google.android.material.card.MaterialCardView>
 

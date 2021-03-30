@@ -4,24 +4,30 @@ import com.google.gson.annotations.SerializedName
 
 data class FutsalResponse(
 
-	@field:SerializedName("_id")
-	val id: String? = null,
+	@field:SerializedName("ID")
+	val futsal_id: String? = null,
 
-	@field:SerializedName("name")
+	@field:SerializedName("Name")
 	val name: String? = null,
 
-	@field:SerializedName("email")
-	val email: String? = null,
-
-	@field:SerializedName("address")
+	@field:SerializedName("Address")
 	val address: String? = null,
 
-	@field:SerializedName("phone")
-	val phone: Long? = null,
+	@field:SerializedName("Email")
+	val email: String? = null,
 
-	@field:SerializedName("description")
-	val description: String? = null,
+	@field:SerializedName("StartTime")
+	val starttime: Long? = null,
 
-	@field:SerializedName("image")
+	@field:SerializedName("EndTime")
+	val endtime: String? = null,
+
+	@field:SerializedName("BookDate")
+	val bookdate: String? = null,
+
+	@field:SerializedName("NumberOfPlayer")
+	val numberofplayer: String? = null,
+
+	@field:SerializedName("Image")
 	val image: String? = null
 )

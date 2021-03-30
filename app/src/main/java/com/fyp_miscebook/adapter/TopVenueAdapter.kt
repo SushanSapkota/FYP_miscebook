@@ -41,10 +41,11 @@ class TopVenueAdapter(
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, FutsalActivity::class.java)
-            intent.putExtra("name",topvenue.name)
-            intent.putExtra("address",topvenue.address)
-            intent.putExtra("email",topvenue.email)
-            intent.putExtra("image",topvenue.image)
+            intent.putExtra("id", topvenue.id)
+            intent.putExtra("name", topvenue.name)
+            intent.putExtra("address", topvenue.address)
+            intent.putExtra("email", topvenue.email)
+            intent.putExtra("image", topvenue.image)
             context.startActivity(intent)
         }
     }

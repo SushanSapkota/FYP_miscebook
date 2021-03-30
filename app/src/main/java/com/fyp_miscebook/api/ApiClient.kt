@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
 
-    private const val BASE_URL: String = "https://miscebook.free.beeceptor.com/"
+    private const val BASE_URL: String = "https://miscebook-3524.restdb.io/rest/"
 
     private val gson: Gson by lazy {
         GsonBuilder().setLenient().create()
@@ -38,5 +38,4 @@ object ApiClient {
     val apiService: ApiService by lazy {
         retrofit.create(ApiService::class.java)
     }
-
 }

@@ -49,4 +49,17 @@
     <string name="menu">Menu</string>
     <string name="map">Map</string>
     <string name="favorite">Favorite</string>
+    <string name="date">Date</string>
+    <string name="finish">Finish</string>
+    <string name="start">Start</string>
+    <string name="number_of_players">Number of players</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="about_us">About Us</string>
+    <string name="support">Support</string>
+    <string name="your_profile">Your Profile</string>
+    <string name="hi_user">Hi User</string>
+    <string name="find_your_sporting_venue">Find Your Sporting Venue</string>
+    <string name="more">More</string>
+    <string name="share_our_app">Share our App</string>
+    <string name="logout">Logout</string>
 </resources>

@@ -6,18 +6,16 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
 import com.fyp_miscebook.AppConstants
 import com.fyp_miscebook.R
-import com.fyp_miscebook.adapter.UsersAdapter
 import com.fyp_miscebook.api.ApiClient
 import com.fyp_miscebook.model.UserResponse
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_menu.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,7 +25,7 @@ class MenuActivity : AppCompatActivity() {
 
     private var sharedPreferences: SharedPreferences? = null
     var tempDialog: ProgressDialog? = null
-    private var listUsers: MutableList<UserResponse> = mutableListOf<UserResponse>()
+    private var listuser: ArrayList<UserResponse> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,18 +37,23 @@ class MenuActivity : AppCompatActivity() {
 
         showProgressDialog()
 
-        listUsers = mutableListOf()
-
         username(user!!)
+
+        data(user)
+
+        logoutTab.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
     }
 
     @SuppressLint("SetTextI18n")
     private fun username(user: String) {
         txt_user_name.text = "Hi $user"
-        dismissProgressDialog()
+    }
 
-        ApiClient.apiService.getUsers().enqueue(object : Callback<MutableList<UserResponse>> {
-            override fun onFailure(call: Call<MutableList<UserResponse>>, t: Throwable) {
+    private fun data(username: String) {
+        ApiClient.apiService.getUsers().enqueue(object : Callback<ArrayList<UserResponse>> {
+            override fun onFailure(call: Call<ArrayList<UserResponse>>, t: Throwable) {
 
                 Toast.makeText(this@MenuActivity, t.localizedMessage, Toast.LENGTH_SHORT)
                     .show()
@@ -58,27 +61,23 @@ class MenuActivity : AppCompatActivity() {
             }
 
             override fun onResponse(
-                call: Call<MutableList<UserResponse>>,
-                response: Response<MutableList<UserResponse>>
+                call: Call<ArrayList<UserResponse>>,
+                response: Response<ArrayList<UserResponse>>
             ) {
-                val usersResponse = response.body()
-                listUsers.clear()
-                usersResponse?.let { listUsers.addAll(it) }
-                Toast.makeText(this@MenuActivity, "SUCCESS", Toast.LENGTH_LONG).show()
-                dismissProgressDialog()
+                val UserResponse = response.body()
+                listuser.clear()
+
+                listuser = UserResponse as ArrayList<UserResponse>
+
+                for (i in 0..listuser.size - 1) {
+                    if (username == listuser[i].username) {
+                        Username_TXT.text = listuser[i].username
+                        Email_TXT.text = listuser[i].email
+                        dismissProgressDialog()
+                    }
+                }
             }
-
         })
-
-//        for (i in 1..listUsers.size) {
-//            if (listUsers.get(i).userName == user) {
-//                Username_TXT.text = listUsers[i].userName
-//                Email_TXT.text = listUsers[i].email
-//                profile_picture.let {
-//                    Glide.with(this@MenuActivity).load(listUsers[i].image).into(it)
-//                }
-//            }
-//        }
     }
 
     override fun onStart() {

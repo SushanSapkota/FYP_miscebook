@@ -1,22 +1,13 @@
 package com.fyp_miscebook.activities
 
+import android.app.ProgressDialog
 import android.os.Bundle
-import android.util.Log
 import android.util.Patterns
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.fyp_miscebook.R
-import com.fyp_miscebook.UserEntity
-import com.fyp_miscebook.adapter.UsersAdapter
+import com.fyp_miscebook.database.UserEntity
 import com.fyp_miscebook.api.ApiClient
-import com.fyp_miscebook.model.UserResponse
-import com.google.gson.Gson
-import kotlinx.android.synthetic.main.activity_booking.*
-import kotlinx.android.synthetic.main.activity_booking.RecyclerView
-import kotlinx.android.synthetic.main.activity_dashboard_.*
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
 import retrofit2.Call
@@ -24,6 +15,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class RegisterActivity : AppCompatActivity() {
+
+    var tempDialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +52,7 @@ class RegisterActivity : AppCompatActivity() {
         Address: String,
         Mobile: String
     ) {
-        val userEntity :UserEntity = UserEntity()
+        val userEntity = UserEntity()
 
         if (Firstname.isEmpty()) {
             et_firstname.error = "First name is empty"
@@ -125,11 +118,61 @@ class RegisterActivity : AppCompatActivity() {
             userEntity.firstname = Firstname
             userEntity.middlename = Middlename
             userEntity.lastname = Lastname
-            userEntity.address = Address
             userEntity.email = Email
+            userEntity.username = Username
             userEntity.password = Password
+            userEntity.address = Address
+            userEntity.mobile = Mobile
+            addUser(userEntity)
+            showProgressDialog()
         } else {
             Toast.makeText(this, "Terms and condition not accepted", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    fun addUser(userData: UserEntity) {
+        val header = HashMap<String, String>()
+        header["x-apikey"] = "ffbb1817873440bf72d76280e70790d377f22"
+        header["Content-Type"] = "application/json"
+
+        ApiClient.apiService.addUser(header, userData).enqueue(object : Callback<UserEntity> {
+
+            override fun onFailure(call: Call<UserEntity>, t: Throwable) {
+                Toast.makeText(this@RegisterActivity, t.localizedMessage, Toast.LENGTH_SHORT)
+                    .show()
+                dismissProgressDialog()
+            }
+
+            override fun onResponse(call: Call<UserEntity>, response: Response<UserEntity>) {
+                if (response.code() == 200) {
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        "Registration Success",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    finish()
+                    dismissProgressDialog()
+                } else {
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        "Registration Failed",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    dismissProgressDialog()
+                }
+            }
+        })
+    }
+
+    fun showProgressDialog() {
+        tempDialog = ProgressDialog(this)
+        tempDialog!!.setCancelable(false)
+        tempDialog!!.setMessage("Loading Data...")
+        tempDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+        tempDialog!!.show()
+    }
+
+    fun dismissProgressDialog() {
+        tempDialog!!.dismiss()
     }
 }

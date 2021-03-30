@@ -11,25 +11,30 @@ data class UserResponse(
   "username": "username",
   "email": "demo@gmail.com"
   "image": "demo"*/
-    @field:SerializedName("id")
-    val id: String? = null,
+    @SerializedName("_id")
+    var id: String? = null,
 
-    @field:SerializedName("first_name")
-    val firstName: String? = null,
+    @SerializedName("FirstName")
+    var firstname: String? = null,
 
-    @field:SerializedName("middle_name")
-    val middleName: String? = null,
+    @SerializedName("MiddleName")
+    var middlename: String? = null,
 
-    @field:SerializedName("last_name")
-    val lastName: String? = null,
+    @SerializedName("LastName")
+    var lastname: String? = null,
 
-    @field:SerializedName("username")
-    val userName: String? = null,
+    @SerializedName("Email")
+    var email: String? = null,
 
-    @field:SerializedName("email")
-    val email: String? = null,
+    @SerializedName("Username")
+    var username: String? = null,
 
-    @field:SerializedName("image")
-    val image: String? = null
+    @SerializedName("Password")
+    var password: String? = null,
 
+    @SerializedName("Address")
+    var address: String? = null,
+
+    @SerializedName("Mobile")
+    var mobile: String? = null
 )

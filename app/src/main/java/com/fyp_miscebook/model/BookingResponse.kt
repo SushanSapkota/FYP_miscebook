@@ -2,13 +2,13 @@ package com.fyp_miscebook.model
 
 import com.google.gson.annotations.SerializedName
 
-data class TopVenueResponse(
+data class BookingResponse(
 
 	@field:SerializedName("_id")
 	val _id: String? = null,
 
-	@field:SerializedName("Futsal_ID")
-	val id: String? = null,
+	@field:SerializedName("Futsal ID")
+	val futsal_id: String? = null,
 
 	@field:SerializedName("Name")
 	val name: String? = null,
@@ -19,10 +19,10 @@ data class TopVenueResponse(
 	@field:SerializedName("Email")
 	val email: String? = null,
 
-	@field:SerializedName("StartTime")
+	@field:SerializedName("Start")
 	val starttime: Long? = null,
 
-	@field:SerializedName("EndTime")
+	@field:SerializedName("End")
 	val endtime: String? = null,
 
 	@field:SerializedName("BookDate")

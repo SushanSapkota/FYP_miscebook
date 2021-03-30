@@ -21,12 +21,7 @@ import com.fyp_miscebook.model.TopVenueResponse
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.activity_booking.*
 import kotlinx.android.synthetic.main.activity_dashboard_.*
-import kotlinx.android.synthetic.main.activity_dashboard_.RecyclerView
-import kotlinx.android.synthetic.main.activity_dashboard_.my_toolbar
-import kotlinx.android.synthetic.main.activity_dashboard_.txt_user_name
-import kotlinx.android.synthetic.main.activity_dashboard_.view.*
 import kotlinx.android.synthetic.main.activity_dashboard_.view.ic_search
 import retrofit2.Call
 import retrofit2.Callback
@@ -37,15 +32,13 @@ class DashboardActivity : AppCompatActivity() {
     private var sharedPreferences: SharedPreferences? = null
     private var topvenueadapter: TopVenueAdapter? = null
     var tempDialog: ProgressDialog? = null
-    private var listVenue: MutableList<TopVenueResponse> = mutableListOf<TopVenueResponse>()
+    private var listVenue: ArrayList<TopVenueResponse> = ArrayList()
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard_)
         setSupportActionBar(findViewById(R.id.my_toolbar))
-
-        listVenue = mutableListOf()
 
         username()
 
@@ -69,10 +62,8 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun data() {
-        ApiClient.apiService.getVenue().enqueue(object : Callback<MutableList<TopVenueResponse>> {
-            override fun onFailure(call: Call<MutableList<TopVenueResponse>>, t: Throwable) {
-
-                Log.e("error", t.localizedMessage)
+        ApiClient.apiService.getVenue().enqueue(object : Callback<ArrayList<TopVenueResponse>> {
+            override fun onFailure(call: Call<ArrayList<TopVenueResponse>>, t: Throwable) {
 
                 animation_view.visibility = View.VISIBLE
                 Toast.makeText(this@DashboardActivity, t.localizedMessage, Toast.LENGTH_SHORT)
@@ -81,13 +72,13 @@ class DashboardActivity : AppCompatActivity() {
             }
 
             override fun onResponse(
-                call: Call<MutableList<TopVenueResponse>>,
-                response: Response<MutableList<TopVenueResponse>>
+                call: Call<ArrayList<TopVenueResponse>>,
+                response: Response<ArrayList<TopVenueResponse>>
             ) {
                 val topvenueresponse = response.body()
                 listVenue.clear()
-                topvenueresponse?.let { listVenue.addAll(it) }
-//                val recyclerView: RecyclerView = findViewById(R.id.recycler_main)
+
+                listVenue = topvenueresponse as ArrayList<TopVenueResponse>
                 topvenueadapter = TopVenueAdapter(this@DashboardActivity, listVenue)
 
                 Log.d("API", Gson().toJson(listVenue))
@@ -96,7 +87,6 @@ class DashboardActivity : AppCompatActivity() {
                 RecyclerView.itemAnimator = DefaultItemAnimator()
                 RecyclerView.adapter = topvenueadapter
 
-//                adapter?.notifyDataSetChanged()
                 Toast.makeText(this@DashboardActivity, "SUCCESS", Toast.LENGTH_LONG).show()
                 dismissProgressDialog()
             }

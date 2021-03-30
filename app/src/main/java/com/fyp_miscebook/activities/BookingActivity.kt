@@ -24,9 +24,6 @@ import com.fyp_miscebook.model.TopVenueResponse
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_booking.*
-import kotlinx.android.synthetic.main.activity_dashboard_.*
-import kotlinx.android.synthetic.main.activity_dashboard_.RecyclerView
-import kotlinx.android.synthetic.main.activity_dashboard_.txt_user_name
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,8 +32,8 @@ class BookingActivity : AppCompatActivity() {
 
     private var sharedPreferences: SharedPreferences? = null
     private var type: String? = null
-    private var listVenue: MutableList<TopVenueResponse> = mutableListOf<TopVenueResponse>()
-    private var listFutsal: MutableList<FutsalResponse> = mutableListOf<FutsalResponse>()
+    private var listVenue: ArrayList<TopVenueResponse> = ArrayList()
+    private var listFutsal: ArrayList<FutsalResponse> = ArrayList()
     private var futsaladapter: FutsalAdapter? = null
     private var topvenueadapter: TopVenueAdapter? = null
     var tempDialog: ProgressDialog? = null
@@ -47,9 +44,6 @@ class BookingActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.my_toolbar))
 
         username()
-
-        listVenue = mutableListOf()
-        listFutsal = mutableListOf()
 
         search.setOnClickListener {
             type = category.text.toString()
@@ -73,9 +67,9 @@ class BookingActivity : AppCompatActivity() {
         if (category == "topvenue") {
             animation_view.isVisible = false
             ApiClient.apiService.getVenue()
-                .enqueue(object : Callback<MutableList<TopVenueResponse>> {
+                .enqueue(object : Callback<ArrayList<TopVenueResponse>> {
                     override fun onFailure(
-                        call: Call<MutableList<TopVenueResponse>>,
+                        call: Call<ArrayList<TopVenueResponse>>,
                         t: Throwable
                     ) {
 
@@ -88,13 +82,12 @@ class BookingActivity : AppCompatActivity() {
                     }
 
                     override fun onResponse(
-                        call: Call<MutableList<TopVenueResponse>>,
-                        response: Response<MutableList<TopVenueResponse>>
+                        call: Call<ArrayList<TopVenueResponse>>,
+                        response: Response<ArrayList<TopVenueResponse>>
                     ) {
                         val topvenueresponse = response.body()
                         listVenue.clear()
                         topvenueresponse?.let { listVenue.addAll(it) }
-//                val recyclerView: RecyclerView = findViewById(R.id.recycler_main)
                         topvenueadapter = TopVenueAdapter(this@BookingActivity, listVenue)
 
                         Log.d("API", Gson().toJson(listVenue))
@@ -103,7 +96,6 @@ class BookingActivity : AppCompatActivity() {
                         RecyclerView.itemAnimator = DefaultItemAnimator()
                         RecyclerView.adapter = topvenueadapter
 
-//                adapter?.notifyDataSetChanged()
                         Toast.makeText(this@BookingActivity, "SUCCESS", Toast.LENGTH_LONG).show()
                         dismissProgressDialog()
                     }
@@ -111,8 +103,8 @@ class BookingActivity : AppCompatActivity() {
         } else if (category == "futsal") {
             animation_view.isVisible = false
             ApiClient.apiService.getFutsal()
-                .enqueue(object : Callback<MutableList<FutsalResponse>> {
-                    override fun onFailure(call: Call<MutableList<FutsalResponse>>, t: Throwable) {
+                .enqueue(object : Callback<ArrayList<FutsalResponse>> {
+                    override fun onFailure(call: Call<ArrayList<FutsalResponse>>, t: Throwable) {
 
                         Log.e("error", t.localizedMessage)
 
@@ -123,8 +115,8 @@ class BookingActivity : AppCompatActivity() {
                     }
 
                     override fun onResponse(
-                        call: Call<MutableList<FutsalResponse>>,
-                        response: Response<MutableList<FutsalResponse>>
+                        call: Call<ArrayList<FutsalResponse>>,
+                        response: Response<ArrayList<FutsalResponse>>
                     ) {
                         val futsalResponse = response.body()
                         listFutsal.clear()
@@ -144,44 +136,47 @@ class BookingActivity : AppCompatActivity() {
                     }
 
                 })
+        } else {
+            Toast.makeText(this, "No Data Found", Toast.LENGTH_SHORT).show()
+            dismissProgressDialog()
         }
-        else if (category == "cricsal") {
-            animation_view.isVisible = false
-            ApiClient.apiService.getCricsal()
-                .enqueue(object : Callback<MutableList<FutsalResponse>> {
-                    override fun onFailure(call: Call<MutableList<FutsalResponse>>, t: Throwable) {
-
-                        Log.e("error", t.localizedMessage)
-
-                        animation_view.visibility = View.VISIBLE
-                        Toast.makeText(this@BookingActivity, t.localizedMessage, Toast.LENGTH_SHORT)
-                            .show()
-                        dismissProgressDialog()
-                    }
-
-                    override fun onResponse(
-                        call: Call<MutableList<FutsalResponse>>,
-                        response: Response<MutableList<FutsalResponse>>
-                    ) {
-                        val futsalResponse = response.body()
-                        listFutsal.clear()
-                        futsalResponse?.let { listFutsal.addAll(it) }
-//                val recyclerView: RecyclerView = findViewById(R.id.recycler_main)
-                        futsaladapter = FutsalAdapter(this@BookingActivity, listFutsal)
-
-                        Log.d("API", Gson().toJson(listFutsal))
-                        val layoutManager = LinearLayoutManager(applicationContext)
-                        RecyclerView.layoutManager = layoutManager
-                        RecyclerView.itemAnimator = DefaultItemAnimator()
-                        RecyclerView.adapter = futsaladapter
-
-//                adapter?.notifyDataSetChanged()
-                        Toast.makeText(this@BookingActivity, "SUCCESS", Toast.LENGTH_LONG).show()
-                        dismissProgressDialog()
-                    }
-
-                })
-        }
+//        else if (category == "cricsal") {
+//            animation_view.isVisible = false
+//            ApiClient.apiService.getCricsal()
+//                .enqueue(object : Callback<MutableList<FutsalResponse>> {
+//                    override fun onFailure(call: Call<MutableList<FutsalResponse>>, t: Throwable) {
+//
+//                        Log.e("error", t.localizedMessage)
+//
+//                        animation_view.visibility = View.VISIBLE
+//                        Toast.makeText(this@BookingActivity, t.localizedMessage, Toast.LENGTH_SHORT)
+//                            .show()
+//                        dismissProgressDialog()
+//                    }
+//
+//                    override fun onResponse(
+//                        call: Call<MutableList<FutsalResponse>>,
+//                        response: Response<MutableList<FutsalResponse>>
+//                    ) {
+//                        val futsalResponse = response.body()
+//                        listFutsal.clear()
+//                        futsalResponse?.let { listFutsal.addAll(it) }
+////                val recyclerView: RecyclerView = findViewById(R.id.recycler_main)
+//                        futsaladapter = FutsalAdapter(this@BookingActivity, listFutsal)
+//
+//                        Log.d("API", Gson().toJson(listFutsal))
+//                        val layoutManager = LinearLayoutManager(applicationContext)
+//                        RecyclerView.layoutManager = layoutManager
+//                        RecyclerView.itemAnimator = DefaultItemAnimator()
+//                        RecyclerView.adapter = futsaladapter
+//
+////                adapter?.notifyDataSetChanged()
+//                        Toast.makeText(this@BookingActivity, "SUCCESS", Toast.LENGTH_LONG).show()
+//                        dismissProgressDialog()
+//                    }
+//
+//                })
+//        }
     }
 
     override fun onStart() {

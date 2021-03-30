@@ -1,21 +1,31 @@
 package com.fyp_miscebook.activities
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.fyp_miscebook.AppConstants
 import com.fyp_miscebook.R
+import com.fyp_miscebook.api.ApiClient
+import com.fyp_miscebook.model.UserResponse
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.android.synthetic.main.activity_dashboard_.*
 import kotlinx.android.synthetic.main.activity_login.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
 
     private var PRIVATE_MODE = 0
     private val PREF_NAME = AppConstants.SharedPreference_login
+    var tempDialog: ProgressDialog? = null
+    private var listuser: ArrayList<UserResponse> = ArrayList()
     val sharedPreferences: SharedPreferences by lazy {
         getSharedPreferences(PREF_NAME, PRIVATE_MODE)
     }
@@ -52,7 +62,8 @@ class LoginActivity : AppCompatActivity() {
                 activity_login_password.error = "Password must have 8 characters"
                 activity_login_password.isFocusable = true
             } else {
-                signIn(username, password)
+                data(username, password)
+                showProgressDialog()
             }
         }
 
@@ -61,41 +72,71 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun signIn(username: String, password: String) {
-        if (checkBox.isChecked) {
-            //save username and password when remember me is ticked
-            editor!!.clear()
-            editor!!.putBoolean(AppConstants.SharedPreference_savelogin, true)
-            editor!!.putString(AppConstants.SharedPreference_username, username)
-            editor!!.putBoolean(AppConstants.SharedPreference_logged, true)
-            editor!!.commit()
+    private fun data(username: String, password: String) {
+        ApiClient.apiService.getUsers().enqueue(object : Callback<ArrayList<UserResponse>> {
+            override fun onFailure(call: Call<ArrayList<UserResponse>>, t: Throwable) {
 
-            if (username == "Admin" && password == "Admin123") {
-                //startActivity(Intent(this,AdminActivity::java.class))
-                Toast.makeText(this, "Welcome Admin", Toast.LENGTH_SHORT).show()
-            } else if (username == "Sushan" && password == "Sushan@123") {
-                startActivity(Intent(this, DashboardActivity::class.java))
-            } else {
-                Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, t.localizedMessage, Toast.LENGTH_SHORT)
+                    .show()
+                dismissProgressDialog()
             }
 
-        } else {
-            //save username and password when remember me is ticked
-            editor!!.clear()
-            editor!!.putBoolean(AppConstants.SharedPreference_savelogin, false)
-            editor!!.putString(AppConstants.SharedPreference_username, username)
-            editor!!.commit()
+            override fun onResponse(
+                call: Call<ArrayList<UserResponse>>,
+                response: Response<ArrayList<UserResponse>>
+            ) {
+                val UserResponse = response.body()
+                listuser.clear()
 
-            if (username == "Admin" && password == "Admin123") {
-                //startActivity(Intent(this,AdminActivity::java.class))
-                Toast.makeText(this, "Welcome Admin", Toast.LENGTH_SHORT).show()
-            } else if (username == "Sushan" && password == "Sushan@123") {
-                startActivity(Intent(this, DashboardActivity::class.java))
-            } else {
-                Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show()
+                listuser = UserResponse as ArrayList<UserResponse>
+
+                for (i in 0..listuser.size) {
+                    if (username.equals(listuser[i].username) && password.equals(listuser[i].password)) {
+                        if (checkBox.isChecked) {
+                            //save username and password when remember me is ticked
+                            editor!!.clear()
+                            editor!!.putBoolean(AppConstants.SharedPreference_savelogin, true)
+                            editor!!.putString(
+                                AppConstants.SharedPreference_username, username
+                            )
+                            editor!!.putBoolean(AppConstants.SharedPreference_logged, true)
+                            editor!!.commit()
+                            startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
+                            dismissProgressDialog()
+                        } else {
+                            //save username and password when remember me is ticked
+                            editor!!.clear()
+                            editor!!.putBoolean(AppConstants.SharedPreference_savelogin, false)
+                            editor!!.putString(
+                                AppConstants.SharedPreference_username, username
+                            )
+                            editor!!.commit()
+                            startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
+                            dismissProgressDialog()
+                        }
+                    } else {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Invalid Credentials",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        dismissProgressDialog()
+                    }
+                }
             }
+        })
+    }
 
-        }
+    fun showProgressDialog() {
+        tempDialog = ProgressDialog(this)
+        tempDialog!!.setCancelable(false)
+        tempDialog!!.setMessage("Loading Data...")
+        tempDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+        tempDialog!!.show()
+    }
+
+    fun dismissProgressDialog() {
+        tempDialog!!.dismiss()
     }
 
     override fun onBackPressed() {
