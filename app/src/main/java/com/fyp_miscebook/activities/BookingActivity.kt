@@ -16,9 +16,11 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fyp_miscebook.AppConstants
 import com.fyp_miscebook.R
+import com.fyp_miscebook.adapter.CricsalAdapter
 import com.fyp_miscebook.adapter.FutsalAdapter
 import com.fyp_miscebook.adapter.TopVenueAdapter
 import com.fyp_miscebook.api.ApiClient
+import com.fyp_miscebook.model.CricsalResponse
 import com.fyp_miscebook.model.FutsalResponse
 import com.fyp_miscebook.model.TopVenueResponse
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -34,7 +36,9 @@ class BookingActivity : AppCompatActivity() {
     private var type: String? = null
     private var listVenue: ArrayList<TopVenueResponse> = ArrayList()
     private var listFutsal: ArrayList<FutsalResponse> = ArrayList()
+    private var listCricsal: ArrayList<CricsalResponse> = ArrayList()
     private var futsaladapter: FutsalAdapter? = null
+    private var cricsaladapter: CricsalAdapter? = null
     private var topvenueadapter: TopVenueAdapter? = null
     var tempDialog: ProgressDialog? = null
 
@@ -136,47 +140,44 @@ class BookingActivity : AppCompatActivity() {
                     }
 
                 })
+        }else if (category == "cricsal") {
+            animation_view.isVisible = false
+            ApiClient.apiService.getCricsal()
+                .enqueue(object : Callback<ArrayList<CricsalResponse>> {
+                    override fun onFailure(call: Call<ArrayList<CricsalResponse>>, t: Throwable) {
+
+                        Log.e("error", t.localizedMessage)
+
+                        animation_view.visibility = View.VISIBLE
+                        Toast.makeText(this@BookingActivity, t.localizedMessage, Toast.LENGTH_SHORT)
+                            .show()
+                        dismissProgressDialog()
+                    }
+
+                    override fun onResponse(
+                        call: Call<ArrayList<CricsalResponse>>,
+                        response: Response<ArrayList<CricsalResponse>>
+                    ) {
+                        val cricsalResponse = response.body()
+                        listCricsal.clear()
+                        cricsalResponse?.let { listCricsal.addAll(it) }
+                        cricsaladapter = CricsalAdapter(this@BookingActivity, listCricsal)
+
+                        Log.d("API", Gson().toJson(listCricsal))
+                        val layoutManager = LinearLayoutManager(applicationContext)
+                        RecyclerView.layoutManager = layoutManager
+                        RecyclerView.itemAnimator = DefaultItemAnimator()
+                        RecyclerView.adapter = cricsaladapter
+
+                        Toast.makeText(this@BookingActivity, "SUCCESS", Toast.LENGTH_LONG).show()
+                        dismissProgressDialog()
+                    }
+
+                })
         } else {
             Toast.makeText(this, "No Data Found", Toast.LENGTH_SHORT).show()
             dismissProgressDialog()
         }
-//        else if (category == "cricsal") {
-//            animation_view.isVisible = false
-//            ApiClient.apiService.getCricsal()
-//                .enqueue(object : Callback<MutableList<FutsalResponse>> {
-//                    override fun onFailure(call: Call<MutableList<FutsalResponse>>, t: Throwable) {
-//
-//                        Log.e("error", t.localizedMessage)
-//
-//                        animation_view.visibility = View.VISIBLE
-//                        Toast.makeText(this@BookingActivity, t.localizedMessage, Toast.LENGTH_SHORT)
-//                            .show()
-//                        dismissProgressDialog()
-//                    }
-//
-//                    override fun onResponse(
-//                        call: Call<MutableList<FutsalResponse>>,
-//                        response: Response<MutableList<FutsalResponse>>
-//                    ) {
-//                        val futsalResponse = response.body()
-//                        listFutsal.clear()
-//                        futsalResponse?.let { listFutsal.addAll(it) }
-////                val recyclerView: RecyclerView = findViewById(R.id.recycler_main)
-//                        futsaladapter = FutsalAdapter(this@BookingActivity, listFutsal)
-//
-//                        Log.d("API", Gson().toJson(listFutsal))
-//                        val layoutManager = LinearLayoutManager(applicationContext)
-//                        RecyclerView.layoutManager = layoutManager
-//                        RecyclerView.itemAnimator = DefaultItemAnimator()
-//                        RecyclerView.adapter = futsaladapter
-//
-////                adapter?.notifyDataSetChanged()
-//                        Toast.makeText(this@BookingActivity, "SUCCESS", Toast.LENGTH_LONG).show()
-//                        dismissProgressDialog()
-//                    }
-//
-//                })
-//        }
     }
 
     override fun onStart() {

@@ -20,13 +20,13 @@ data class BookingResponse(
 	val email: String? = null,
 
 	@field:SerializedName("Start")
-	val starttime: Long? = null,
+	val starttime: Int? = null,
 
 	@field:SerializedName("End")
-	val endtime: String? = null,
+	val endtime: Int? = null,
 
 	@field:SerializedName("BookDate")
-	val bookdate: String? = null,
+	val bookdate: Int? = null,
 
 	@field:SerializedName("NumberOfPlayer")
 	val numberofplayer: String? = null,
