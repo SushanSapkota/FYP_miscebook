@@ -4,37 +4,33 @@ import com.google.gson.annotations.SerializedName
 
 data class UserResponse(
 
-    /*  "id": "60406cb09a00131100002f29",
-  "first_name": "demo",
-  "middle_name": "demo",
-  "last_name": "demo",
-  "username": "username",
-  "email": "demo@gmail.com"
-  "image": "demo"*/
-    @SerializedName("_id")
-    var id: String? = null,
+	@field:SerializedName("Email")
+	val email: String? = null,
 
-    @SerializedName("FirstName")
-    var firstname: String? = null,
+	@field:SerializedName("Address")
+	val address: String? = null,
 
-    @SerializedName("MiddleName")
-    var middlename: String? = null,
+	@field:SerializedName("Username")
+	val username: String? = null,
 
-    @SerializedName("LastName")
-    var lastname: String? = null,
+	@field:SerializedName("FirstName")
+	val firstName: String? = null,
 
-    @SerializedName("Email")
-    var email: String? = null,
+	@field:SerializedName("admin")
+	val admin: Boolean? = null,
 
-    @SerializedName("Username")
-    var username: String? = null,
+	@field:SerializedName("_id")
+	val id: String? = null,
 
-    @SerializedName("Password")
-    var password: String? = null,
+	@field:SerializedName("LastName")
+	val lastName: String? = null,
 
-    @SerializedName("Address")
-    var address: String? = null,
+	@field:SerializedName("MiddleName")
+	val middleName: String? = null,
 
-    @SerializedName("Mobile")
-    var mobile: String? = null
+	@field:SerializedName("Mobile")
+	val mobile: String? = null,
+
+	@field:SerializedName("Password")
+	val password: String? = null
 )

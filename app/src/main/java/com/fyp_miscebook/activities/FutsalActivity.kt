@@ -57,7 +57,7 @@ class FutsalActivity : AppCompatActivity() {
         Glide.with(this).load(image).into(futsal_image)
 
         toolbar.setNavigationOnClickListener {
-            startActivity(Intent(this, FutsalActivity::class.java))
+            startActivity(Intent(this, DashboardActivity::class.java))
         }
 
         btn_starttime.setOnClickListener {
@@ -105,59 +105,60 @@ class FutsalActivity : AppCompatActivity() {
         }
 
         btn_book_futsal.setOnClickListener {
-            bookingValidation()
+            showProgressDialog()
+            bookfutsal()
         }
     }
 
-    private fun bookingValidation() {
-        currentStarttime = activity_futsal_start.text.toString().toInt()
-        currentEndtime = activity_futsal_end.text.toString().toInt()
-        currentBookdate = activity_futsal_date.text.toString().toInt()
-        currentPlayer = activity_futsal_numberofplayer.text.toString()
-        id = intent.getStringExtra("id").toString()
-
-        ApiClient.apiService.getBooking().enqueue(object : Callback<ArrayList<BookingResponse>> {
-            override fun onFailure(call: Call<ArrayList<BookingResponse>>, t: Throwable) {
-                Toast.makeText(this@FutsalActivity, t.localizedMessage, Toast.LENGTH_SHORT)
-                    .show()
-                dismissProgressDialog()
-            }
-
-            override fun onResponse(
-                call: Call<ArrayList<BookingResponse>>,
-                response: Response<ArrayList<BookingResponse>>
-            ) {
-                val BookingResponse = response.body()
-                listbooking.clear()
-
-                listbooking = BookingResponse as ArrayList<BookingResponse>
-
-
-                if (listbooking.size > 0) {
-                    for (i in 0..listbooking.size - 1) {
-                        if (id == listbooking[i].futsal_id && currentBookdate == listbooking[i].bookdate) {
-                            if (currentStarttime == listbooking[i].starttime ||
-                                (currentStarttime!!.toInt() > listbooking[i].starttime!!.toInt() &&
-                                        currentStarttime!!.toInt() < listbooking[i].endtime!!.toInt())
-                            ) {
-                                Toast.makeText(
-                                    this@FutsalActivity,
-                                    "Already Booked",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        } else {
-                            showProgressDialog()
-                            bookfutsal()
-                        }
-                    }
-                } else {
-                    showProgressDialog()
-                    bookfutsal()
-                }
-            }
-        })
-    }
+//    private fun bookingValidation() {
+//        currentStarttime = activity_futsal_start.text.toString().toInt()
+//        currentEndtime = activity_futsal_end.text.toString().toInt()
+//        currentBookdate = activity_futsal_date.text.toString().toInt()
+//        currentPlayer = activity_futsal_numberofplayer.text.toString()
+//        id = intent.getStringExtra("id").toString()
+//
+//        ApiClient.apiService.getBooking().enqueue(object : Callback<ArrayList<BookingResponse>> {
+//            override fun onFailure(call: Call<ArrayList<BookingResponse>>, t: Throwable) {
+//                Toast.makeText(this@FutsalActivity, t.localizedMessage, Toast.LENGTH_SHORT)
+//                    .show()
+//                dismissProgressDialog()
+//            }
+//
+//            override fun onResponse(
+//                call: Call<ArrayList<BookingResponse>>,
+//                response: Response<ArrayList<BookingResponse>>
+//            ) {
+//                val BookingResponse = response.body()
+//                listbooking.clear()
+//
+//                listbooking = BookingResponse as ArrayList<BookingResponse>
+//
+//
+//                if (listbooking.size > 0) {
+//                    for (i in 0..listbooking.size - 1) {
+//                        if (id == listbooking[i].futsal_id && currentBookdate == listbooking[i].bookdate) {
+//                            if (currentStarttime == listbooking[i].starttime ||
+//                                (currentStarttime!!.toInt() > listbooking[i].starttime!!.toInt() &&
+//                                        currentStarttime!!.toInt() < listbooking[i].endtime!!.toInt())
+//                            ) {
+//                                Toast.makeText(
+//                                    this@FutsalActivity,
+//                                    "Already Booked",
+//                                    Toast.LENGTH_SHORT
+//                                ).show()
+//                            }
+//                        } else {
+//                            showProgressDialog()
+//                            bookfutsal()
+//                        }
+//                    }
+//                } else {
+//                    showProgressDialog()
+//                    bookfutsal()
+//                }
+//            }
+//        })
+//    }
 
     @SuppressLint("SimpleDateFormat")
     private fun bookfutsal() {
@@ -222,6 +223,6 @@ class FutsalActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        startActivity(Intent(this, FutsalActivity::class.java))
+        startActivity(Intent(this, DashboardActivity::class.java))
     }
 }

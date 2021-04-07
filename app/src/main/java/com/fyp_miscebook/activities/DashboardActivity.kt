@@ -44,7 +44,7 @@ class DashboardActivity : AppCompatActivity() {
             startActivity(Intent(this, DashboardActivity::class.java))
         }
 
-        username()
+        getUsername()
     }
 
     override fun onResume() {
@@ -54,7 +54,7 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun username() {
+    private fun getUsername() {
         sharedPreferences =
             getSharedPreferences(AppConstants.SharedPreference_login, Context.MODE_PRIVATE)
 

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import android.os.Bundle
+import android.widget.CheckBox
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.fyp_miscebook.AppConstants
@@ -15,6 +16,7 @@ import com.fyp_miscebook.model.UserResponse
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_dashboard_.*
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_register.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,6 +32,13 @@ class LoginActivity : AppCompatActivity() {
     }
     private var editor: Editor? = null
 
+    // For User checking
+    var adminUser = false
+    var verifiedUser = false
+    lateinit var userData: String
+
+    lateinit var saveCheckBox: CheckBox
+
     @SuppressLint("CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +46,7 @@ class LoginActivity : AppCompatActivity() {
 
         editor = sharedPreferences.edit()
 
+        initUI()
         //creating sharedpreference
         val savelogin = sharedPreferences.getBoolean(AppConstants.SharedPreference_savelogin, true)
 
@@ -71,6 +81,10 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun initUI() {
+        saveCheckBox = findViewById(R.id.checkBox)
+    }
+
     private fun data(username: String, password: String) {
         ApiClient.apiService.getUsers().enqueue(object : Callback<ArrayList<UserResponse>> {
             override fun onFailure(call: Call<ArrayList<UserResponse>>, t: Throwable) {
@@ -86,44 +100,51 @@ class LoginActivity : AppCompatActivity() {
             ) {
                 val UserResponse = response.body()
                 listuser.clear()
-
                 listuser = UserResponse as ArrayList<UserResponse>
 
-                for (i in 0..listuser.size) {
-                    if (username.equals(listuser[i].username) && password.equals(listuser[i].password)) {
-                        if (checkBox.isChecked) {
-                            //save username and password when remember me is ticked
-                            editor!!.clear()
-                            editor!!.putBoolean(AppConstants.SharedPreference_savelogin, true)
-                            editor!!.putString(
-                                AppConstants.SharedPreference_username, username
-                            )
-                            editor!!.putBoolean(AppConstants.SharedPreference_logged, true)
-                            editor!!.commit()
-                            startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
-                            dismissProgressDialog()
-                        } else {
-                            //save username and password when remember me is ticked
-                            editor!!.clear()
-                            editor!!.putBoolean(AppConstants.SharedPreference_savelogin, false)
-                            editor!!.putString(
-                                AppConstants.SharedPreference_username, username
-                            )
-                            editor!!.commit()
-                            startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
-                            dismissProgressDialog()
-                        }
+                for (i in 0 until listuser.size) {
+                    if (username.equals(
+                            listuser[i].username,
+                            true
+                        ) && password.equals(listuser[i].password, false)
+                    ) {
+                        adminUser = listuser[i].admin!!
+                        verifiedUser = true
+                        userData = listuser[i].username!!
+                        if (saveCheckBox.isChecked)
+                            saveUserData(userData)
+                        break
+
                     } else {
-                        Toast.makeText(
-                            this@LoginActivity,
-                            "Invalid Credentials",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        dismissProgressDialog()
+                        verifiedUser = false
                     }
                 }
+
+                if (verifiedUser) {
+                    success(adminUser)
+                } else {
+                    Toast.makeText(
+                        this@LoginActivity,
+                        "Invalid Credentials",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                dismissProgressDialog()
+
             }
         })
+    }
+
+
+    fun success(admin: Boolean) {
+        if (admin) {
+            Toast.makeText(this, "Admin Login Success", Toast.LENGTH_SHORT).show()
+
+        } else {
+            Toast.makeText(this, "Hello," + userData, Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, DashboardActivity::class.java))
+        }
     }
 
     fun showProgressDialog() {
@@ -155,5 +176,22 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(exitIntent)
             }
             .show()
+    }
+
+    private fun saveUserData(username: String?) {
+        //save username and password when remember me is ticked
+        editor!!.clear()
+        editor!!.putBoolean(AppConstants.SharedPreference_savelogin, true)
+        editor!!.putString(
+            AppConstants.SharedPreference_username, username
+        )
+        editor!!.putBoolean(AppConstants.SharedPreference_logged, true)
+        editor!!.commit()
+        startActivity(
+            Intent(
+                this@LoginActivity,
+                DashboardActivity::class.java
+            )
+        )
     }
 }
