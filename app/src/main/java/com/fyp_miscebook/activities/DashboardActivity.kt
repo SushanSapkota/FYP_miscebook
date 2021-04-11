@@ -22,7 +22,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_dashboard_.*
-import kotlinx.android.synthetic.main.activity_dashboard_.view.ic_search
+import kotlinx.android.synthetic.main.activity_dashboard_.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,19 +40,21 @@ class DashboardActivity : AppCompatActivity() {
         setContentView(R.layout.activity_dashboard_)
         setSupportActionBar(findViewById(R.id.my_toolbar))
 
-        username()
-
-        data()
-        showProgressDialog()
-
         my_toolbar.ic_search.setOnClickListener {
             startActivity(Intent(this, DashboardActivity::class.java))
         }
 
+        getUsername()
+    }
+
+    override fun onResume() {
+        getData()
+        showProgressDialog()
+        super.onResume()
     }
 
     @SuppressLint("SetTextI18n")
-    private fun username() {
+    private fun getUsername() {
         sharedPreferences =
             getSharedPreferences(AppConstants.SharedPreference_login, Context.MODE_PRIVATE)
 
@@ -61,7 +63,7 @@ class DashboardActivity : AppCompatActivity() {
 
     }
 
-    private fun data() {
+    private fun getData() {
         ApiClient.apiService.getVenue().enqueue(object : Callback<ArrayList<TopVenueResponse>> {
             override fun onFailure(call: Call<ArrayList<TopVenueResponse>>, t: Throwable) {
 

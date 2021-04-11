@@ -17,6 +17,7 @@ import com.fyp_miscebook.database.BookingEntity
 import com.fyp_miscebook.model.BookingResponse
 import kotlinx.android.synthetic.main.activity_dashboard_.*
 import kotlinx.android.synthetic.main.activity_futsal.*
+import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,23 +31,21 @@ class FutsalActivity : AppCompatActivity() {
     var address: String? = null
     var email: String? = null
     var image: String? = null
-    var currentStarttime: String? = null
-    var currentEndtime: String? = null
-    var currentBookdate: String? = null
+    var currentStarttime: Int? = null
+    var currentEndtime: Int? = null
+    var currentBookdate: Int? = null
     var currentPlayer: String? = null
     var tempDialog: ProgressDialog? = null
+    private var listbooking: ArrayList<BookingResponse> = ArrayList()
 
     var timeFormat = SimpleDateFormat("HHmm", Locale.US)
     var dateFormat = SimpleDateFormat("MMddyy", Locale.US)
-    private var listBooking: ArrayList<BookingResponse> = ArrayList()
-
 
     @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_futsal)
-        id = intent.getStringExtra("id").toString()
         name = intent.getStringExtra("name").toString()
         address = intent.getStringExtra("address").toString()
         email = intent.getStringExtra("email").toString()
@@ -106,12 +105,66 @@ class FutsalActivity : AppCompatActivity() {
         }
 
         btn_book_futsal.setOnClickListener {
-            ValidateBooking()
+            showProgressDialog()
+            bookfutsal()
         }
     }
 
+//    private fun bookingValidation() {
+//        currentStarttime = activity_futsal_start.text.toString().toInt()
+//        currentEndtime = activity_futsal_end.text.toString().toInt()
+//        currentBookdate = activity_futsal_date.text.toString().toInt()
+//        currentPlayer = activity_futsal_numberofplayer.text.toString()
+//        id = intent.getStringExtra("id").toString()
+//
+//        ApiClient.apiService.getBooking().enqueue(object : Callback<ArrayList<BookingResponse>> {
+//            override fun onFailure(call: Call<ArrayList<BookingResponse>>, t: Throwable) {
+//                Toast.makeText(this@FutsalActivity, t.localizedMessage, Toast.LENGTH_SHORT)
+//                    .show()
+//                dismissProgressDialog()
+//            }
+//
+//            override fun onResponse(
+//                call: Call<ArrayList<BookingResponse>>,
+//                response: Response<ArrayList<BookingResponse>>
+//            ) {
+//                val BookingResponse = response.body()
+//                listbooking.clear()
+//
+//                listbooking = BookingResponse as ArrayList<BookingResponse>
+//
+//
+//                if (listbooking.size > 0) {
+//                    for (i in 0..listbooking.size - 1) {
+//                        if (id == listbooking[i].futsal_id && currentBookdate == listbooking[i].bookdate) {
+//                            if (currentStarttime == listbooking[i].starttime ||
+//                                (currentStarttime!!.toInt() > listbooking[i].starttime!!.toInt() &&
+//                                        currentStarttime!!.toInt() < listbooking[i].endtime!!.toInt())
+//                            ) {
+//                                Toast.makeText(
+//                                    this@FutsalActivity,
+//                                    "Already Booked",
+//                                    Toast.LENGTH_SHORT
+//                                ).show()
+//                            }
+//                        } else {
+//                            showProgressDialog()
+//                            bookfutsal()
+//                        }
+//                    }
+//                } else {
+//                    showProgressDialog()
+//                    bookfutsal()
+//                }
+//            }
+//        })
+//    }
+
     @SuppressLint("SimpleDateFormat")
     private fun bookfutsal() {
+        val header = HashMap<String, String>()
+        header["x-apikey"] = "ffbb1817873440bf72d76280e70790d377f22"
+        header["Content-Type"] = "application/json"
         val bookingEntity = BookingEntity()
 
         bookingEntity.futsal_id = id.toString()
@@ -123,14 +176,6 @@ class FutsalActivity : AppCompatActivity() {
         bookingEntity.bookdate = currentBookdate.toString()
         bookingEntity.numberofplayer = currentPlayer.toString()
         bookingEntity.image = image.toString()
-        saveToDatabase(bookingEntity)
-        showProgressDialog()
-    }
-
-    private fun saveToDatabase(bookingEntity: BookingEntity) {
-        val header = HashMap<String, String>()
-        header["x-apikey"] = "ffbb1817873440bf72d76280e70790d377f22"
-        header["Content-Type"] = "application/json"
 
         ApiClient.apiService.booking(header, bookingEntity)
             .enqueue(object : Callback<BookingEntity> {
@@ -163,77 +208,6 @@ class FutsalActivity : AppCompatActivity() {
                     }
                 }
             })
-    }
-
-    fun ValidateBooking() {
-
-        currentStarttime = activity_futsal_start.text.toString()
-        currentEndtime = activity_futsal_end.text.toString()
-        currentBookdate = activity_futsal_date.text.toString()
-        currentPlayer = activity_futsal_numberofplayer.text.toString()
-
-        showProgressDialog()
-
-        ApiClient.apiService.getBooking().enqueue(object : Callback<ArrayList<BookingResponse>> {
-            override fun onFailure(call: Call<ArrayList<BookingResponse>>, t: Throwable) {
-
-                Toast.makeText(this@FutsalActivity, t.localizedMessage, Toast.LENGTH_SHORT)
-                    .show()
-                dismissProgressDialog()
-            }
-
-            override fun onResponse(
-                call: Call<ArrayList<BookingResponse>>,
-                response: Response<ArrayList<BookingResponse>>
-            ) {
-                val bookingresponse = response.body()
-                listBooking.clear()
-
-                listBooking = bookingresponse as ArrayList<BookingResponse>
-
-                for (i in 0 until listBooking.size) {
-                    if (currentBookdate.equals(listBooking[i].bookdate)) {
-                        if (currentStarttime!! == listBooking[i].starttime) {
-                            Toast.makeText(
-                                this@FutsalActivity,
-                                "Booking data and starttime is same",
-                                Toast.LENGTH_LONG
-                            ).show()
-                            dismissProgressDialog()
-                            break
-                        } else {
-                            if (currentStarttime!!.toInt() > listBooking[i].starttime!!.toInt() && currentStarttime!!.toInt() < listBooking[i].endtime!!.toInt()) {
-                                Toast.makeText(
-                                    this@FutsalActivity,
-                                    "Booking data and starttime is different but start lies between start and end",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                                dismissProgressDialog()
-                                break
-                            } else {
-                                if (currentEndtime!!.toInt() > listBooking[i].starttime!!.toInt()) {
-                                    endtimeValidation()
-                                } else {
-                                    bookfutsal()
-                                }
-                            }
-                        }
-                    } else {
-                        bookfutsal()
-                        break
-                    }
-                }
-            }
-        })
-    }
-
-    private fun endtimeValidation() {
-        Toast.makeText(
-            this,
-            "Booking data and starttime is different but end lies between start and end",
-            Toast.LENGTH_SHORT
-        ).show()
-        finish()
     }
 
     fun showProgressDialog() {

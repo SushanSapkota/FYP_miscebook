@@ -12,13 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fyp_miscebook.R
 import com.fyp_miscebook.activities.FutsalActivity
-import com.fyp_miscebook.model.TopVenueResponse
+import com.fyp_miscebook.model.CricsalResponse
 
-class TopVenueAdapter(
-    private val context: Context,
-    private var list: MutableList<TopVenueResponse>
-) :
-    RecyclerView.Adapter<TopVenueAdapter.MyViewHolder>() {
+class CricsalAdapter(private val context: Context, private var list: MutableList<CricsalResponse>) :
+    RecyclerView.Adapter<CricsalAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val inflater = LayoutInflater.from(context)
@@ -32,25 +29,25 @@ class TopVenueAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val topvenue = list.get(position)
+        val futsal = list.get(position)
 
-        holder.name?.text = topvenue.name
-        holder.address?.text = topvenue.address
-        holder.email?.text = topvenue.email
-        holder.imagepic?.let { Glide.with(context).load(topvenue.image).into(it) }
+        holder.name?.text = futsal.name
+        holder.address?.text = futsal.address
+        holder.email?.text = futsal.email
+        holder.imagepic?.let { Glide.with(context).load(futsal.image).into(it) }
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, FutsalActivity::class.java)
-            intent.putExtra("id", topvenue.futsal_id)
-            intent.putExtra("name", topvenue.name)
-            intent.putExtra("address", topvenue.address)
-            intent.putExtra("email", topvenue.email)
-            intent.putExtra("image", topvenue.image)
+            intent.putExtra("id", futsal.futsal_id)
+            intent.putExtra("name", futsal.name)
+            intent.putExtra("address", futsal.address)
+            intent.putExtra("email", futsal.email)
+            intent.putExtra("image", futsal.image)
             context.startActivity(intent)
         }
     }
 
-    class MyViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
+    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         var imagepic: ImageView? = null
         var name: TextView? = null

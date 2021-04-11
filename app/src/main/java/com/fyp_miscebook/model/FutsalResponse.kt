@@ -16,17 +16,8 @@ data class FutsalResponse(
 	@field:SerializedName("Email")
 	val email: String? = null,
 
-	@field:SerializedName("StartTime")
-	val starttime: Long? = null,
-
-	@field:SerializedName("EndTime")
-	val endtime: String? = null,
-
-	@field:SerializedName("BookDate")
-	val bookdate: String? = null,
-
-	@field:SerializedName("NumberOfPlayer")
-	val numberofplayer: String? = null,
+	@field:SerializedName("Contact")
+	val contact: String? = null,
 
 	@field:SerializedName("Image")
 	val image: String? = null

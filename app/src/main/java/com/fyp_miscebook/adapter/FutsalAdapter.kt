@@ -34,7 +34,10 @@ class FutsalAdapter(private val context: Context, private var list: MutableList<
         holder.name?.text = futsal.name
         holder.address?.text = futsal.address
         holder.email?.text = futsal.email
-        holder.imagepic?.let { Glide.with(context).load(futsal.image).into(it) }
+        holder.imagepic?.let {
+            Glide.with(context).load(futsal.image
+            ).placeholder(R.drawable.ic_profile).error(R.drawable.ic_search).into(it)
+        }
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, FutsalActivity::class.java)
