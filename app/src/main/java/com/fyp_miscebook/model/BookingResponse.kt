@@ -20,7 +20,7 @@ data class BookingResponse(
 	val email: String? = null,
 
 	@field:SerializedName("Start")
-	val starttime: Long? = null,
+	val starttime: String? = null,
 
 	@field:SerializedName("End")
 	val endtime: String? = null,
