@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.fyp_miscebook.AppConstants
 import com.fyp_miscebook.R
+import com.fyp_miscebook.activities.admin.AdminActivity
 import com.fyp_miscebook.api.ApiClient
 import com.fyp_miscebook.model.UserResponse
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -140,6 +141,7 @@ class LoginActivity : AppCompatActivity() {
     fun success(admin: Boolean) {
         if (admin) {
             Toast.makeText(this, "Admin Login Success", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, AdminActivity::class.java))
 
         } else {
             Toast.makeText(this, "Hello," + userData, Toast.LENGTH_SHORT).show()
